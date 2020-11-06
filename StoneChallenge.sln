@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30517.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoneChallenge", "StoneChallenge\StoneChallenge.csproj", "{DF9C5556-2379-43E8-8232-13436AD334C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF9C5556-2379-43E8-8232-13436AD334C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF9C5556-2379-43E8-8232-13436AD334C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF9C5556-2379-43E8-8232-13436AD334C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF9C5556-2379-43E8-8232-13436AD334C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6AA9B46-E214-4E11-BDDF-8D986167F7F6}
+	EndGlobalSection
+EndGlobal
