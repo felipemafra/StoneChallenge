@@ -6,34 +6,34 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StoneChallenge.Models;
+using StoneChallenge.Models.Repository.IRepository;
 
 namespace StoneChallenge.Controllers
 {
     public class FuncionariosController : Controller
     {
-        private readonly StoneChallengeContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public FuncionariosController(StoneChallengeContext context)
+        public FuncionariosController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: Funcionarios
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Funcionario.ToListAsync());
+            return View(_unitOfWork.Funcionario.GetAll());
         }
 
         // GET: Funcionarios/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var funcionario = await _context.Funcionario
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var funcionario = _unitOfWork.Funcionario.GetFirstOrDefault(m => m.Id == id);
             if (funcionario == null)
             {
                 return NotFound();
@@ -53,26 +53,26 @@ namespace StoneChallenge.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Departamento,Cargo,SalarioBruto,DataDeAdmissao")] Funcionario funcionario)
+        public IActionResult Create([Bind("Id,Nome,Departamento,Cargo,SalarioBruto,DataDeAdmissao")] Funcionario funcionario)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(funcionario);
-                await _context.SaveChangesAsync();
+                _unitOfWork.Funcionario.Insert(funcionario);
+                _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
             return View(funcionario);
         }
 
         // GET: Funcionarios/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public  IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var funcionario = await _context.Funcionario.FindAsync(id);
+            var funcionario = _unitOfWork.Funcionario.GetById(id.GetValueOrDefault());
             if (funcionario == null)
             {
                 return NotFound();
@@ -85,7 +85,7 @@ namespace StoneChallenge.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Departamento,Cargo,SalarioBruto,DataDeAdmissao")] Funcionario funcionario)
+        public IActionResult Edit(int id, [Bind("Id,Nome,Departamento,Cargo,SalarioBruto,DataDeAdmissao")] Funcionario funcionario)
         {
             if (id != funcionario.Id)
             {
@@ -96,8 +96,8 @@ namespace StoneChallenge.Controllers
             {
                 try
                 {
-                    _context.Update(funcionario);
-                    await _context.SaveChangesAsync();
+                    _unitOfWork.Funcionario.Update(funcionario);
+                    _unitOfWork.Save();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,15 +116,14 @@ namespace StoneChallenge.Controllers
         }
 
         // GET: Funcionarios/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var funcionario = await _context.Funcionario
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var funcionario = _unitOfWork.Funcionario.GetFirstOrDefault(m => m.Id == id);
             if (funcionario == null)
             {
                 return NotFound();
@@ -136,17 +135,17 @@ namespace StoneChallenge.Controllers
         // POST: Funcionarios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
-            var funcionario = await _context.Funcionario.FindAsync(id);
-            _context.Funcionario.Remove(funcionario);
-            await _context.SaveChangesAsync();
+            var funcionario = _unitOfWork.Funcionario.GetById(id);
+            _unitOfWork.Funcionario.Delete(funcionario);
+            _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
 
         private bool FuncionarioExists(int id)
         {
-            return _context.Funcionario.Any(e => e.Id == id);
+            return _unitOfWork.Funcionario.GetFirstOrDefault(e => e.Id == id) is Funcionario;
         }
     }
 }

@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using StoneChallenge.Models.Repository.IRepository;
+using StoneChallenge.Models.Repository;
 
 namespace StoneChallenge
 {
@@ -28,6 +30,8 @@ namespace StoneChallenge
 
             services.AddDbContext<StoneChallengeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("StoneChallengeContext")));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

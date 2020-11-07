@@ -29,14 +29,50 @@ namespace StoneChallenge.Models.Repository
             return dbSet.Find(id);
         }
 
-        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> oderBy = null, string includeProperties = null)
+        public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = null)
         {
-            throw new NotImplementedException();
+            IQueryable<TEntity> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            //include properties will be comma seperated
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query.Include(includeProperty);
+                }
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+
+            return query;
         }
 
         public virtual TEntity GetFirstOrDefault(Expression<Func<TEntity, bool>> filter = null, string includeProperties = null)
         {
-            throw new NotImplementedException();
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            
+            //include properties will be comma seperated
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return query.FirstOrDefault();
         }
 
         public virtual void Delete(int id)
