@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using StoneChallenge.Models;
 using StoneChallenge.Models.Repository.IRepository;
+using StoneChallenge.Services;
 
 namespace StoneChallenge.Controllers
 {
@@ -147,5 +148,15 @@ namespace StoneChallenge.Controllers
         {
             return _unitOfWork.Funcionario.GetFirstOrDefault(e => e.Id == id) is Funcionario;
         }
+
+        #region API CALLS
+        [HttpGet]
+        public IActionResult GetBonus(double bonusDisponivel)
+        {
+            var funcionarios = _unitOfWork.Funcionario.GetAll();
+            
+            return Json(FuncionariosService.CalculatarBonus(funcionarios, new Decimal(bonusDisponivel)));
+        }
+        #endregion
     }
 }

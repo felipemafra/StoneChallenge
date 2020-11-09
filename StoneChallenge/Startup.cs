@@ -59,6 +59,11 @@ namespace StoneChallenge
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Funcionarios}/{action=Index}/{id?}");
+
+                endpoints.MapControllerRoute(
+                    name: "api",
+                    pattern: "api/{bonusDisponivel=0.0}/{controller=Funcionarios}/{action=GetBonus}"
+                    );
             });
         }
     }
