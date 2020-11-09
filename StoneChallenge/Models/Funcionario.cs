@@ -23,7 +23,7 @@ namespace StoneChallenge.Models
         public string Cargo { get; set; }
 
         [Display(Name = "Salário Bruto")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Column(TypeName = "decimal(18, 2)")]
         public decimal SalarioBruto { get; set; }
 

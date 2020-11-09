@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using StoneChallenge.Models.Repository.IRepository;
 using StoneChallenge.Models.Repository;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace StoneChallenge
 {
@@ -48,6 +50,16 @@ namespace StoneChallenge
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            var defaultCulture = new CultureInfo("en-US");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = new List<CultureInfo> { defaultCulture },
+                SupportedUICultures = new List<CultureInfo> { defaultCulture }
+            };
+            app.UseRequestLocalization(localizationOptions);
+
             app.UseStaticFiles();
 
             app.UseRouting();
