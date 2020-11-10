@@ -27,14 +27,9 @@ namespace StoneChallenge.Controllers
         }
 
         // GET: Funcionarios/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id = 0)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var funcionario = _unitOfWork.Funcionario.GetFirstOrDefault(m => m.Id == id);
+            Funcionario funcionario = _unitOfWork.Funcionario.GetById(id) as Funcionario;
             if (funcionario == null)
             {
                 return NotFound();
@@ -66,7 +61,7 @@ namespace StoneChallenge.Controllers
         }
 
         // GET: Funcionarios/Edit/5
-        public  IActionResult Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -154,7 +149,7 @@ namespace StoneChallenge.Controllers
         public IActionResult GetBonus(double bonusDisponivel)
         {
             var funcionarios = _unitOfWork.Funcionario.GetAll();
-            
+
             return Json(FuncionariosService.CalculatarBonus(funcionarios, new Decimal(bonusDisponivel)));
         }
         #endregion

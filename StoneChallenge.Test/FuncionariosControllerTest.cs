@@ -3,10 +3,12 @@ using Moq;
 using StoneChallenge.Controllers;
 using StoneChallenge.Data.Mock;
 using StoneChallenge.Models;
+using StoneChallenge.Models.Enums;
 using StoneChallenge.Models.Repository;
 using StoneChallenge.Models.Repository.IRepository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace StoneChallenge.Test
@@ -19,15 +21,45 @@ namespace StoneChallenge.Test
         [Fact]
         public void IndexUnitTest()
         {
-            var _mock = new Mock<IUnitOfWork>();
-            _mock.Setup(s => s.Funcionario.GetAll(null, null, null)).Returns(FuncionariosMockData.GetTestFuncionarioItems());
-            var controller = new FuncionariosController(_mock.Object);
+            var mock = new Mock<IUnitOfWork>();
+            var controller = new FuncionariosController(mock.Object);
+            mock.Setup(s => s.Funcionario.GetAll(null, null, null)).Returns(FuncionariosMockData.GetTestFuncionarioItems());
 
             var result = controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
-            var viewResultFuncionarios = Assert.IsAssignableFrom<List<Funcionario>>(viewResult.ViewData.Model);
-            Assert.Equal(4, viewResultFuncionarios.Count);
+            var viewResultValue = Assert.IsAssignableFrom<List<Funcionario>>(viewResult.ViewData.Model);
+            Assert.Equal(4, viewResultValue.Count);
+        }
+
+        [Theory]
+        [InlineData(0009968, 0000000)]
+        public void DetailsUnitTest(int validId, int invalidId)
+        {
+            var mock = new Mock<IUnitOfWork>();
+            FuncionariosController controller = new FuncionariosController(mock.Object);
+
+            #region valid id
+            mock.Setup<Funcionario>(s => s.Funcionario.GetById(validId)).Returns(FuncionariosMockData.GetTestFuncionarioItems().FirstOrDefault(n => n.Id == validId));
+
+            var result = controller.Details(validId);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var viewResultValue = Assert.IsAssignableFrom<Funcionario>(viewResult.ViewData.Model);
+
+            Assert.Equal("Victor Wilson", viewResultValue.Nome);
+            Assert.Equal(Departamento.Diretoria, viewResultValue.Departamento);
+            Assert.Equal("Diretor Financeiro", viewResultValue.Cargo);
+            Assert.Equal(new decimal(12696.20), viewResultValue.SalarioBruto);
+            Assert.Equal(new DateTime(2012, 01, 05), viewResultValue.DataDeAdmissao);
+            #endregion
+
+            #region invalid id
+            mock.Setup(s => s.Funcionario.GetById(invalidId)).Returns(FuncionariosMockData.GetTestFuncionarioItems().FirstOrDefault(n => n.Id == invalidId));
+            var notFoundResult = controller.Details(invalidId);
+
+            Assert.IsType<NotFoundResult>(notFoundResult);
+            #endregion
         }
     }
 }
