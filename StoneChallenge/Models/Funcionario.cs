@@ -19,7 +19,7 @@ namespace StoneChallenge.Models
 
         [Required]
         [Display(Name = "Area")]
-        public Departmento Departamento { get; set; }
+        public Departamento Departamento { get; set; }
         public string Cargo { get; set; }
 
         [Display(Name = "Salário Bruto")]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoneChallenge.Models.Enums
 {
-    public enum Departmento : byte
+    public enum Departamento : byte
     {
         Diretoria = 1,
         Contabilidade = 2,

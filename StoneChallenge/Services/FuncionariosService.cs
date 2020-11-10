@@ -17,15 +17,15 @@ namespace StoneChallenge.Services
         {
             switch (funcionario.Departamento)
             {
-                case Departmento.Diretoria:
+                case Departamento.Diretoria:
                     return 1;
-                case Departmento.Contabilidade:
-                case Departmento.Financeiro:
-                case Departmento.Tecnologia:
+                case Departamento.Contabilidade:
+                case Departamento.Financeiro:
+                case Departamento.Tecnologia:
                     return 2;
-                case Departmento.ServicosGerais:
+                case Departamento.ServicosGerais:
                     return 3;
-                case Departmento.RelacionamentoComOCliente:
+                case Departamento.RelacionamentoComOCliente:
                     return 5;
                 default:
                     return 0;
