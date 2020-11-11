@@ -13,6 +13,8 @@ using StoneChallenge.Models.Repository.IRepository;
 using StoneChallenge.Models.Repository;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using StoneChallenge.Services;
+using StoneChallenge.Services.Interfaces;
 
 namespace StoneChallenge
 {
@@ -34,6 +36,10 @@ namespace StoneChallenge
                     options.UseSqlServer(Configuration.GetConnectionString("StoneChallengeContext")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<ICalculadoraDePesoService, CalculadoraDePesoPorAreaDeAtuacaoService>();
+            services.AddSingleton<ICalculadoraDePesoService, CalculadoraDePesoPorTempoDeAdmissaoService>();
+            services.AddSingleton<ICalculadoraDePesoService, CalculadoraDePesoPorFaixaSalarial>();
+            services.AddSingleton<ICalculadoraDeBonusService, CalculadoraDeBonusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

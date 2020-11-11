@@ -1,9 +1,5 @@
 ﻿using StoneChallenge.Models;
-using StoneChallenge.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StoneChallenge.Services
 {
@@ -11,21 +7,14 @@ namespace StoneChallenge.Services
     {
         public override int Calcular(Funcionario funcionario)
         {
-            switch (funcionario.Departamento)
-            {
-                case Departamento.Diretoria:
-                    return 1;
-                case Departamento.Contabilidade:
-                case Departamento.Financeiro:
-                case Departamento.Tecnologia:
-                    return 2;
-                case Departamento.ServicosGerais:
-                    return 3;
-                case Departamento.RelacionamentoComOCliente:
-                    return 5;
-                default:
-                    return 0;
-            }
+            if (DateTime.Now.Year - funcionario.DataDeAdmissao.Year >= 8)
+                return 5;
+            else if (DateTime.Now.Year - funcionario.DataDeAdmissao.Year >= 3)
+                return 3;
+            else if (DateTime.Now.Year - funcionario.DataDeAdmissao.Year >= 1)
+                return 2;
+            else
+                return 1;
         }
     }
 }

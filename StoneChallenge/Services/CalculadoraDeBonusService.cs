@@ -9,11 +9,18 @@ using System.Threading.Tasks;
 
 namespace StoneChallenge.Services
 {
-    public class FuncionariosService : IFuncionariosService
+    public class CalculadoraDeBonusService : ICalculadoraDeBonusService
     {
-        public ICalculadoraDePesoService Paa { get; set; }
-        public ICalculadoraDePesoService Pta { get; set; }
-        public ICalculadoraDePesoService Pfs { get; set; }
+        private ICalculadoraDePesoService _calculadoraDePesoPorAreaDeAtuacaoService { get; set; }
+        private  ICalculadoraDePesoService _calculadoraDePesoPorTempoDeAdmissaoService { get; set; }
+        private  ICalculadoraDePesoService _calculadoraDePesoPorFaixaSalarial { get; set; }
+
+        public CalculadoraDeBonusService(ICalculadoraDePesoService calculadoraDePesoPorAreaDeAtuacaoService, ICalculadoraDePesoService calculadoraDePesoPorTempoDeAdmissaoService, ICalculadoraDePesoService calculadoraDePesoPorFaixaSalarial)
+        {
+            _calculadoraDePesoPorAreaDeAtuacaoService = calculadoraDePesoPorAreaDeAtuacaoService;
+            _calculadoraDePesoPorTempoDeAdmissaoService = calculadoraDePesoPorTempoDeAdmissaoService;
+            _calculadoraDePesoPorFaixaSalarial = calculadoraDePesoPorFaixaSalarial;
+        }
 
         public ParticipacaoDTO CalculatarBonus(IEnumerable<Funcionario> funcionarios, decimal bonusDisponivel)
         {
@@ -22,11 +29,7 @@ namespace StoneChallenge.Services
 
             foreach (var funcionario in funcionarios)
             {
-                Paa = new CalculadoraDePesoPorAreaDeAtuacaoService();
-                Pta = new CalculadoraDePesoPorTempoDeAdmissaoService();
-                Pfs = new CalculadoraDePesoPorFaixaSalarial();
-
-                decimal bonusDoFuncionario = (12 * funcionario.SalarioBruto * (Pta.Calcular(funcionario) + Paa.Calcular(funcionario))) / Pfs.Calcular(funcionario);
+                decimal bonusDoFuncionario = (12 * funcionario.SalarioBruto * (_calculadoraDePesoPorTempoDeAdmissaoService.Calcular(funcionario) + _calculadoraDePesoPorAreaDeAtuacaoService.Calcular(funcionario))) / _calculadoraDePesoPorFaixaSalarial.Calcular(funcionario);
                 bonusTotal += bonusDoFuncionario;
 
                 listaDeFuncionarios.Add(new FuncionarioDTO

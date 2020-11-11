@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoneChallenge.Services.Interfaces
 {
-    interface IFuncionariosService
+    public interface ICalculadoraDeBonusService
     {
         ParticipacaoDTO CalculatarBonus(IEnumerable<Funcionario> funcionarios, decimal bonusDisponivel);
     }

@@ -15,10 +15,12 @@ namespace StoneChallenge.Controllers
     public class FuncionariosController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICalculadoraDeBonusService _calculadoraDeBonusService;
 
-        public FuncionariosController(IUnitOfWork unitOfWork)
+        public FuncionariosController(IUnitOfWork unitOfWork, ICalculadoraDeBonusService calculadoraDeBonusService)
         {
             _unitOfWork = unitOfWork;
+            _calculadoraDeBonusService = calculadoraDeBonusService;
         }
 
         // GET: Funcionarios
@@ -150,8 +152,7 @@ namespace StoneChallenge.Controllers
         public IActionResult GetBonus(double bonusDisponivel)
         {
             var funcionarios = _unitOfWork.Funcionario.GetAll();
-            IFuncionariosService funcionariosService = new FuncionariosService();
-            return Json(funcionariosService.CalculatarBonus(funcionarios, new Decimal(bonusDisponivel)));
+            return Json(_calculadoraDeBonusService.CalculatarBonus(funcionarios, new Decimal(bonusDisponivel)));
         }
         #endregion
     }
