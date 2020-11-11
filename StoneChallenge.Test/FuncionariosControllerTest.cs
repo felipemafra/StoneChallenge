@@ -6,6 +6,8 @@ using StoneChallenge.Models;
 using StoneChallenge.Models.Enums;
 using StoneChallenge.Models.Repository;
 using StoneChallenge.Models.Repository.IRepository;
+using StoneChallenge.Services;
+using StoneChallenge.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +17,25 @@ namespace StoneChallenge.Test
 {
     public class FuncionariosControllerTest
     {
-        private FuncionariosController _controller;
-        //private Mock<FuncionarioRepository> _mock = new Mock<FuncionarioRepository>();
+        private ICalculadoraDePesoService _calculadoraDePesoPorAreaDeAtuacaoService;
+        private ICalculadoraDePesoService _calculadoraDePesoPorTempoDeAdmissaoService;
+        private ICalculadoraDePesoService _calculadoraDePesoPorFaixaSalarial;
+        private ICalculadoraDeBonusService _calculadoraDeBonusService;
+
+        //public FuncionariosControllerTest(ICalculadoraDePesoService calculadoraDePesoPorAreaDeAtuacaoService, ICalculadoraDePesoService calculadoraDePesoPorTempoDeAdmissaoService, ICalculadoraDePesoService calculadoraDePesoPorFaixaSalarial)
+        public FuncionariosControllerTest()
+        {
+            _calculadoraDePesoPorAreaDeAtuacaoService = new CalculadoraDePesoPorAreaDeAtuacaoService();
+            _calculadoraDePesoPorTempoDeAdmissaoService = new CalculadoraDePesoPorTempoDeAdmissaoService();
+            _calculadoraDePesoPorFaixaSalarial = new CalculadoraDePesoPorFaixaSalarial();
+            _calculadoraDeBonusService = new CalculadoraDeBonusService(_calculadoraDePesoPorAreaDeAtuacaoService, _calculadoraDePesoPorTempoDeAdmissaoService, _calculadoraDePesoPorFaixaSalarial);
+        }
 
         [Fact]
         public void IndexUnitTest()
         {
             var mock = new Mock<IUnitOfWork>();
-            var controller = new FuncionariosController(mock.Object);
+            var controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
             mock.Setup(s => s.Funcionario.GetAll(null, null, null)).Returns(FuncionariosMockData.GetTestFuncionarioItems());
 
             var result = controller.Index();
@@ -37,7 +50,7 @@ namespace StoneChallenge.Test
         public void DetailsUnitTest(int validId, int invalidId)
         {
             var mock = new Mock<IUnitOfWork>();
-            FuncionariosController controller = new FuncionariosController(mock.Object);
+            FuncionariosController controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
 
             #region valid id
             mock.Setup<Funcionario>(s => s.Funcionario.GetById(validId)).Returns(FuncionariosMockData.GetTestFuncionarioItems().FirstOrDefault(n => n.Id == validId));
