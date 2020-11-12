@@ -39,5 +39,23 @@ namespace StoneChallenge.Test
 
             Assert.Equal(resultadoEsperado, _calculadora.Calcular(funcionario));
         }
+
+        [Theory]
+        [InlineData(1000.00, 1, 1, 1, 24000.00)]
+        [InlineData(2000.00, 2, 1, 3, 24000.00)]
+        [InlineData(1500.00, 3, 5, 5, 28800.00)]
+        [InlineData(998.55, 3, 5, 3, 31953.60)]
+        // (decimal salarioBruto, int pesoPorTempoDeAdmissao, int pesoPorAreaDeAtuacao, int pesoPorFaixaSalarial)
+        public void O_Servico_De_Calcular_Bonus_Deve_Retornar_O_Valor_Correto(double salarioBruto, int pesoPorTempoDeAdmissao, int pesoPorAreaDeAtuacao, int pesoPorFaixaSalarial, double resultado)
+        {
+            // arrange
+            decimal salario = new decimal(salarioBruto);
+            decimal resultadoExperado = new decimal(resultado);
+
+            // act 
+
+            // assert
+            Assert.Equal(resultadoExperado, CalculadoraDeBonusService.FormulaDeCalculo(salario, pesoPorTempoDeAdmissao, pesoPorAreaDeAtuacao, pesoPorFaixaSalarial));
+        }
     }
 }
