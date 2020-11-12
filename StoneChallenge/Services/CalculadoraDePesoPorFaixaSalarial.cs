@@ -16,9 +16,9 @@ namespace StoneChallenge.Services
         {
             if (funcionario.SalarioBruto > (new Decimal(8.0) * SalarioMinimo))
                 return 5;
-            else if (funcionario.SalarioBruto >= (new Decimal(5.0) * SalarioMinimo) && funcionario.SalarioBruto < (new Decimal(8.0) * SalarioMinimo))
+            else if (funcionario.SalarioBruto > (new Decimal(5.0) * SalarioMinimo) && funcionario.SalarioBruto <= (new Decimal(8.0) * SalarioMinimo))
                 return 3;
-            else if (funcionario.SalarioBruto >= (new Decimal(3.0) * SalarioMinimo) && funcionario.SalarioBruto < (new Decimal(5.0) * SalarioMinimo))
+            else if (funcionario.SalarioBruto > (new Decimal(3.0) * SalarioMinimo) && funcionario.SalarioBruto <= (new Decimal(5.0) * SalarioMinimo))
                 return 2;
             else
                 return 1;
