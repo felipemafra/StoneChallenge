@@ -73,5 +73,36 @@ namespace StoneChallenge.Test
             Assert.IsType<NotFoundResult>(notFoundResult);
             #endregion
         }
+
+        [Theory]
+        [ClassData(typeof(CreateUnitTestFakeData))]
+        public void CreateUnitTest_Deve_Permitir_Apenas_A_Criacao_De_Um_Funcionario_Valido(Funcionario funcionario, bool valido)
+        {
+            // arrange
+            var mock = new Mock<IUnitOfWork>();
+            FuncionariosController controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
+            mock.Setup(s => s.Funcionario.Insert(funcionario));
+
+            // assert
+            if (valido)
+            {
+                // act
+                var result = controller.Create(funcionario);
+
+                // assert
+                var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+                Assert.Equal(nameof(FuncionariosController.Index), redirectToActionResult.ActionName);
+                Assert.Null(redirectToActionResult.ControllerName);
+            }
+            else
+            {
+                // act
+                controller.ModelState.AddModelError("Parametros", "Falta um dos parametros para a criacao do funcionario");
+                var result = controller.Create(funcionario);
+
+                var viewResult = Assert.IsType<ViewResult>(result);
+                var viewResultValue = Assert.IsAssignableFrom<Funcionario>(viewResult.ViewData.Model);
+            }
+        }
     }
 }
