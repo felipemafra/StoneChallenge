@@ -1,4 +1,10 @@
-﻿namespace StoneChallenge.Models
+﻿using StoneChallenge.Models.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace StoneChallenge.Models
 {
     public class FuncionarioDTO
     {
