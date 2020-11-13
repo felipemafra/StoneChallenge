@@ -1,11 +1,6 @@
-﻿using StoneChallenge.Data.Fake;
-using StoneChallenge.Models;
-using StoneChallenge.Models.Enums;
+﻿using StoneChallenge.Models;
 using StoneChallenge.Services;
-using StoneChallenge.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using StoneChallenge.Test.Data;
 using Xunit;
 
 namespace StoneChallenge.Test

@@ -3,48 +3,14 @@ using StoneChallenge.Models.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace StoneChallenge.Data.Fake
+namespace StoneChallenge.Test.Data
 {
-    public class AreaDeAtuacaoFakeData : IEnumerable<object[]>
+    public class TempoDeAdmissaoFakeData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            // Teste de peso por área de atuação - Diretoria
-            yield return new object[]
-            {
-                new Funcionario
-                {
-                    Id = 9999001,
-                    Nome = "Alberto",
-                    Cargo = "Dummy",
-                    Departamento = Departamento.Diretoria,
-                    SalarioBruto = new decimal(2000.00),
-                    DataDeAdmissao = DateTime.Now.AddMonths(-3)
-                },
-
-                1 // O resultado do peso deve ser esse valor
-            };
-
-            // Teste de peso por área de atuação - Contabilidade
-            yield return new object[]
-            {
-                new Funcionario
-                {
-                    Id = 9999001,
-                    Nome = "Alberto",
-                    Cargo = "Dummy",
-                    Departamento = Departamento.Contabilidade,
-                    SalarioBruto = new decimal(2000.00),
-                    DataDeAdmissao = DateTime.Now.AddMonths(-3)
-                },
-
-                2 // O resultado do peso deve ser esse valor
-           };
-
-            // Teste de peso por área de atuação - Financeiro
+            // Teste de peso por tempo de adimissão para funcionarios com menos de 1 ano.
             yield return new object[]
             {
                 new Funcionario
@@ -57,10 +23,26 @@ namespace StoneChallenge.Data.Fake
                     DataDeAdmissao = DateTime.Now.AddMonths(-3)
                 },
 
+                1 // O resultado do peso deve ser esse valor
+            };
+
+            // Teste de peso por tempo de adimissão para funcionarios com mais de 1 ano e menos de 3 anos. 
+            yield return new object[]
+            {
+                new Funcionario
+                {
+                    Id = 9999001,
+                    Nome = "Alberto",
+                    Cargo = "Dummy",
+                    Departamento = Departamento.Financeiro,
+                    SalarioBruto = new decimal(2000.00),
+                    DataDeAdmissao = DateTime.Now.AddYears(-2)
+                },
+
                 2 // O resultado do peso deve ser esse valor
            };
 
-            // Teste de peso por área de atuação - Serviços Gerais
+            // Teste de peso por tempo de adimissão para funcionarios com mais de 3 anos e menos de 8 anos. 
             yield return new object[]
             {
                 new Funcionario
@@ -68,15 +50,15 @@ namespace StoneChallenge.Data.Fake
                     Id = 9999001,
                     Nome = "Alberto",
                     Cargo = "Dummy",
-                    Departamento = Departamento.ServicosGerais,
+                    Departamento = Departamento.Financeiro,
                     SalarioBruto = new decimal(2000.00),
-                    DataDeAdmissao = DateTime.Now.AddMonths(-3)
+                    DataDeAdmissao = DateTime.Now.AddYears(-5)
                 },
 
                 3 // O resultado do peso deve ser esse valor
-           };
+            };
 
-            // Teste de peso por área de atuação - Relacionamento com o cliente
+            // Teste de peso por tempo de adimissão para funcionarios com mais de 8 anos
             yield return new object[]
             {
                 new Funcionario
@@ -84,15 +66,13 @@ namespace StoneChallenge.Data.Fake
                     Id = 9999001,
                     Nome = "Alberto",
                     Cargo = "Dummy",
-                    Departamento = Departamento.RelacionamentoComOCliente,
+                    Departamento = Departamento.Financeiro,
                     SalarioBruto = new decimal(2000.00),
-                    DataDeAdmissao = DateTime.Now.AddMonths(-3)
+                    DataDeAdmissao = DateTime.Now.AddYears(-9)
                 },
 
                 5 // O resultado do peso deve ser esse valor
-           };
-
-
+            };
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();

@@ -3,10 +3,8 @@ using StoneChallenge.Models.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace StoneChallenge.Data.Fake
+namespace StoneChallenge.Test.Data
 {
     public class FaixaSalarialFakeData : IEnumerable<object[]>
     {

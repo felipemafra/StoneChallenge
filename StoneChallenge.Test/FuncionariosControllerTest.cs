@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using StoneChallenge.Controllers;
-using StoneChallenge.Data.Fake;
 using StoneChallenge.Models;
 using StoneChallenge.Models.Enums;
-using StoneChallenge.Models.Repository;
 using StoneChallenge.Models.Repository.IRepository;
 using StoneChallenge.Services;
 using StoneChallenge.Services.Interfaces;
+using StoneChallenge.Test.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
