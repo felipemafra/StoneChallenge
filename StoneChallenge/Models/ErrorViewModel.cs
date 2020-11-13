@@ -1,5 +1,3 @@
-using System;
-
 namespace StoneChallenge.Models
 {
     public class ErrorViewModel

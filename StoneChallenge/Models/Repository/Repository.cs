@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace StoneChallenge.Models.Repository
 {
@@ -62,7 +61,7 @@ namespace StoneChallenge.Models.Repository
             {
                 query = query.Where(filter);
             }
-            
+
             //include properties will be comma seperated
             if (includeProperties != null)
             {

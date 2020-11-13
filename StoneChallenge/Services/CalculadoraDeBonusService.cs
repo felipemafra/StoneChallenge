@@ -1,19 +1,15 @@
 ﻿using StoneChallenge.Models;
-using StoneChallenge.Models.Enums;
 using StoneChallenge.Services.Interfaces;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace StoneChallenge.Services
 {
     public class CalculadoraDeBonusService : ICalculadoraDeBonusService
     {
         private ICalculadoraDePesoService _calculadoraDePesoPorAreaDeAtuacaoService { get; set; }
-        private  ICalculadoraDePesoService _calculadoraDePesoPorTempoDeAdmissaoService { get; set; }
-        private  ICalculadoraDePesoService _calculadoraDePesoPorFaixaSalarial { get; set; }
+        private ICalculadoraDePesoService _calculadoraDePesoPorTempoDeAdmissaoService { get; set; }
+        private ICalculadoraDePesoService _calculadoraDePesoPorFaixaSalarial { get; set; }
 
         public static decimal FormulaDeCalculo(decimal salarioBruto, int pesoPorTempoDeAdmissao, int pesoPorAreaDeAtuacao, int pesoPorFaixaSalarial)
         {
@@ -30,7 +26,7 @@ namespace StoneChallenge.Services
         public ParticipacaoDTO CalculatarBonus(IEnumerable<Funcionario> funcionarios, decimal bonusDisponivel)
         {
             decimal bonusTotal = new Decimal(0.0);
-            List <FuncionarioDTO> listaDeFuncionarios = new List<FuncionarioDTO>();
+            List<FuncionarioDTO> listaDeFuncionarios = new List<FuncionarioDTO>();
 
             foreach (var funcionario in funcionarios)
             {

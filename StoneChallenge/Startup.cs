@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using StoneChallenge.Models.Repository.IRepository;
 using StoneChallenge.Models.Repository;
-using System.Globalization;
-using Microsoft.AspNetCore.Localization;
+using StoneChallenge.Models.Repository.IRepository;
 using StoneChallenge.Services;
 using StoneChallenge.Services.Interfaces;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace StoneChallenge
 {
