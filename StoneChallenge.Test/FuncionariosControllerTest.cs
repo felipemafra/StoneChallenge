@@ -31,22 +31,22 @@ namespace StoneChallenge.Test
         }
 
         [Fact]
-        public void IndexUnitTest()
+        public void Index_Deve_Retornar_Todos_Os_Funcionarios()
         {
             var mock = new Mock<IUnitOfWork>();
             var controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
             mock.Setup(s => s.Funcionario.GetAll(null, null, null)).Returns(FuncionariosMockData.GetTestFuncionarioItems());
-
             var result = controller.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result);
             var viewResultValue = Assert.IsAssignableFrom<List<Funcionario>>(viewResult.ViewData.Model);
             Assert.Equal(4, viewResultValue.Count);
+            mock.Verify();
         }
 
         [Theory]
         [InlineData(0009968, 0000000)]
-        public void DetailsUnitTest(int validId, int invalidId)
+        public void Details_Deve_Retornar_Um_Funcionario_Dado_Um_id(int validId, int invalidId)
         {
             var mock = new Mock<IUnitOfWork>();
             FuncionariosController controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
@@ -72,6 +72,7 @@ namespace StoneChallenge.Test
 
             Assert.IsType<NotFoundResult>(notFoundResult);
             #endregion
+            mock.Verify();
         }
 
         [Theory]
@@ -81,7 +82,7 @@ namespace StoneChallenge.Test
             // arrange
             var mock = new Mock<IUnitOfWork>();
             FuncionariosController controller = new FuncionariosController(mock.Object, _calculadoraDeBonusService);
-            mock.Setup(s => s.Funcionario.Insert(funcionario));
+            mock.Setup(s => s.Funcionario.Insert(funcionario)).Verifiable();
 
             // assert
             if (valido)
@@ -93,6 +94,7 @@ namespace StoneChallenge.Test
                 var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
                 Assert.Equal(nameof(FuncionariosController.Index), redirectToActionResult.ActionName);
                 Assert.Null(redirectToActionResult.ControllerName);
+                mock.VerifyAll();
             }
             else
             {
